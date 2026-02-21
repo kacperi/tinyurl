@@ -2,7 +2,7 @@ import json
 from django.http import JsonResponse, HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_GET
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from .models import ShortLink
 
 from urllib.parse import urlparse
@@ -29,12 +29,16 @@ def create_shortlink(request: HttpRequest) -> JsonResponse:
 
 
 @require_GET
-def redirect_to_page(request: HttpRequest, hash: str = "") -> HttpResponse:
-    if not hash: 
-        target_url = 'https://www.google.com/'
+def redirect_to_page(request: HttpRequest, hash: str) -> HttpResponse:
     shortlink_qs = ShortLink.objects.filter(hash=hash)
     if shortlink_qs.exists():
         target_url = shortlink_qs.first().url
+    else:
+        return render(
+                    request,
+                    "invalid_hash.html",
+                    {"hash": hash},
+                )
     
     parsed_url = urlparse(target_url)
     if not parsed_url.scheme:

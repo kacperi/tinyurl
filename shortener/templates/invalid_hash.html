@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+h1 {text-align: center;}
+</style>
+</head>
+<body>
+
+<h1>Your url hash is invalid</h1>
+<p>Your hash <b>{{ hash }}</b> is invalid or doesn't exist in the database.</p>
+<p>To use the link shortener you need to pass a valid hash like this:</p>
+<p>
+<a href="http://127.0.0.1:8000/redirect/d4c9d9027326271a">http://127.0.0.1:8000/redirect/d4c9d9027326271a</a>
+</p>
+<p>Valid hash is the one you got from your POST request response to <a href="http://127.0.0.1:8000/short_link/">http://127.0.0.1:8000/short_link/</a></p>
+<p>Valid hash is always 16 characters long.</p>
+
+</body>
+</html> 
