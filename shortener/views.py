@@ -35,14 +35,13 @@ def redirect_to_page(request: HttpRequest, hash: str) -> HttpResponse:
         target_url = shortlink_qs.first().url
     else:
         return render(
-                    request,
-                    "invalid_hash.html",
-                    {"hash": hash},
-                )
-    
+            request,
+            "invalid_hash.html",
+            {"hash": hash},
+        )
+
     parsed_url = urlparse(target_url)
     if not parsed_url.scheme:
         target_url = "https://" + parsed_url.geturl()
-        
-    return redirect(target_url)
 
+    return redirect(target_url)
