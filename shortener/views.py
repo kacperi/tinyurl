@@ -1,11 +1,12 @@
 import json
-from django.http import JsonResponse, HttpRequest, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST, require_GET
-from django.shortcuts import redirect, render
-from .models import ShortLink
-
 from urllib.parse import urlparse
+
+from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET, require_POST
+
+from .models import ShortLink
 
 
 @csrf_exempt

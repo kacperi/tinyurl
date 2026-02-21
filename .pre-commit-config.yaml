@@ -6,3 +6,9 @@ repos:
         args: [--line-length=90]
         language_version: python3.13.12
 
+  - repo: https://github.com/pycqa/isort
+    rev: 8.0.0
+    hooks:
+      - id: isort
+        args: ["--profile", "black", "--line-length", "90"]
+
