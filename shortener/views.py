@@ -13,8 +13,8 @@ from .models import ShortLink
 
 class CreateShortlinkView(View):
     @method_decorator(csrf_exempt)
-    def dispatch(self, *args: Any, **kwargs: Any) -> HttpResponse:
-        return super().dispatch(*args, **kwargs)
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request: HttpRequest) -> JsonResponse:
         try:
