@@ -1,11 +1,12 @@
 import json
+from typing import Any
 from urllib.parse import urlparse
 
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET
 from django.views.generic import View
 
 from .models import ShortLink

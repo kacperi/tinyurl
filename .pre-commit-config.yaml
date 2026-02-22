@@ -12,3 +12,9 @@ repos:
       - id: isort
         args: ["--profile", "black", "--line-length", "90"]
 
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.3.3
+    hooks:
+      - id: autoflake
+        args: [--remove-all-unused-imports, --in-place]
+
