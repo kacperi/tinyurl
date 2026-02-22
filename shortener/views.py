@@ -3,30 +3,35 @@ from urllib.parse import urlparse
 
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
+from django.views.generic import View
 
 from .models import ShortLink
 
 
-@csrf_exempt
-@require_POST
-def create_shortlink(request: HttpRequest) -> JsonResponse:
-    try:
-        data = json.loads(request.body)
-    except json.JSONDecodeError:
-        return JsonResponse({"error": "Invalid JSON"}, status=400)
+class CreateShortlinkView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().dispatch(*args, **kwargs)
 
-    url = data.get("url")
-    if not url:
-        return JsonResponse({"error": "Missing url in the request"}, status=400)
+    def post(self, request: HttpRequest) -> JsonResponse:
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
 
-    shortlink, _ = ShortLink.objects.get_or_create(
-        url=url,
-        defaults={"hash": ShortLink(url=url).generate_hash()},
-    )
+        url = data.get("url")
+        if not url:
+            return JsonResponse({"error": "Missing url in the request"}, status=400)
 
-    return JsonResponse({"shortlink": shortlink.hash})
+        shortlink, _ = ShortLink.objects.get_or_create(
+            url=url,
+            defaults={"hash": ShortLink(url=url).generate_hash()},
+        )
+
+        return JsonResponse({"shortlink": shortlink.hash})
 
 
 @require_GET
