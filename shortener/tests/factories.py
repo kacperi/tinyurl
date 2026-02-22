@@ -1,5 +1,6 @@
 import factory
-from your_app.models import ShortLink
+
+from shortener.models import ShortLink
 
 
 class ShortLinkFactory(factory.django.DjangoModelFactory):
