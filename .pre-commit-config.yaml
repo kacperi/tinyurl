@@ -18,3 +18,11 @@ repos:
       - id: autoflake
         args: [--remove-all-unused-imports, --in-place]
 
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: python
+        pass_filenames: false
+
