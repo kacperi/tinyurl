@@ -26,7 +26,7 @@ def create_shortlink(request: HttpRequest) -> JsonResponse:
         defaults={"hash": ShortLink(url=url).generate_hash()},
     )
 
-    return JsonResponse({"shortlink": shortlink.hash})
+    return JsonResponse({"link": "http://localhost:8000/redirect/" + shortlink.hash})
 
 
 @require_GET
@@ -39,6 +39,7 @@ def redirect_to_page(request: HttpRequest, hash: str) -> HttpResponse:
             request,
             "invalid_hash.html",
             {"hash": hash},
+            status=404,
         )
 
     parsed_url = urlparse(target_url)
