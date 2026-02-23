@@ -5,7 +5,7 @@ from django.db import models
 
 class ShortLink(models.Model):
     hash = models.CharField(max_length=16, primary_key=True, editable=False)
-    url = models.URLField()
+    url = models.URLField(editable=False)
 
     def generate_hash(self) -> str:
         return hashlib.sha256(self.url.encode("utf-8")).hexdigest()[:16]
@@ -16,4 +16,4 @@ class ShortLink(models.Model):
         super().save(*args, **kwargs)
 
     def __repr__(self) -> str:
-        return f"<{self.hash} -- {self.url}>"
+        return f"<{self.url} -- {self.hash}>"
